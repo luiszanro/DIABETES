@@ -9,13 +9,13 @@ minor = 0
 patch = 0
 
 # Set the package details
-name = 'Gastric-Cancer'
+name = 'DIABETES'
 version = '.'.join(str(value)for value in (major, minor, patch))
 author = 'Luis Zanon' 
 url = 'https://github.com/luiszanro/GASTRIC-CANCER'
 description = (
     'Project of Data Science'
-    + 'Gastric Cancer.'
+    + 'DIABETES.'
 )
 
 # Now is commented I will integrate it later when creating the virtual env
