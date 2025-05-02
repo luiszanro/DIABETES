@@ -12,7 +12,7 @@ patch = 0
 name = 'DIABETES'
 version = '.'.join(str(value)for value in (major, minor, patch))
 author = 'Luis Zanon' 
-url = 'https://github.com/luiszanro/GASTRIC-CANCER'
+url = 'https://github.com/luiszanro/DIABETES'
 description = (
     'Project of Data Science'
     + 'DIABETES.'
