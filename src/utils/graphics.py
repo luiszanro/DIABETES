@@ -1,6 +1,7 @@
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
+import matplotlib.cm as cm
 
 def plotheatmap(data):
     df = data
@@ -23,8 +24,11 @@ def plotheatmap(data):
 
 
 def trainer_importance_plot(trainer_importance_sorted):
+    
+    colors = cm.viridis(np.linspace(0, 1, len(trainer_importance_sorted.head(10))))
     # Formatting figsize
     plt.figure(figsize=(10, 6))
+    trainer_importance_sorted.head(10).plot(kind='bar', color=colors)
     # Formatting the plot
     plt.title("Top 10 Features (Logistic Regression)")
     plt.xlabel("Features")
