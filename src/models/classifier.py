@@ -18,8 +18,9 @@ class ModelTrainer:
             self.model = xgb.XGBClassifier(scale_pos_weight=10, random_state=42)
         elif model_type == 'LogisticRegression':
             #self.model = LogisticRegression(class_weight=class_weight, random_state=42)
-            print("paris check")
-            self.model = LogisticRegression(max_iter=1000, class_weight=class_weight, random_state=42)
+            print("run logistic")
+            #self.model = LogisticRegression(max_iter=1000, class_weight=class_weight, random_state=42)
+            self.model = LogisticRegression(max_iter=1000, random_state=42)
         else:
             raise ValueError("Invalid model type. Choose from 'RandomForest', 'XGBoost', 'LogisticRegression'.")
     

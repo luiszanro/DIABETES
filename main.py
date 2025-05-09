@@ -82,9 +82,6 @@ def defineSpecificProgramOptions():
         help="Relative path to log directory.",
     )
     
-    #args = parser.parse_args()
-    #return parser.parse_args()
-    
     return parser.parse_args()
 
 def main():
@@ -111,7 +108,6 @@ def main():
     print(f"Using model: {args.model}")
     print(f"Execution mode: {args.choose_mode}")
     print(f"Results will be saved to: {args.output if args.output else 'Default location'}")
-    print(f"###########################################")
 
     #############
     ## Load data
@@ -137,11 +133,10 @@ def main():
     # Outliers, identying and excluding
     outliers = outliers_based_zscores(df)
     excluded = exclude(df)
-    print("Paris")   
     # Check if first column is managed in states or binary
     
     if df['Diabetes_012'].nunique() <= 2:
-        print("Paris")  
+        print("No Binary")  
         '''
         This is state is on work yet
         The data column Diabetes_012 is managed as states 0, 1 and 2 
@@ -164,68 +159,58 @@ def main():
     else:
         ##############################3
         # BINARY MODE BELOW
-        print("The column 'Diabetes_012' contains ONLY 0 and 1.")
-        # Define features (X) and target variable (y)
+        print("The column 'Diabetes_012' contains ONLY zeros and ones.")
+        # Force Binary
         df_binary = force_binary(df)
-        # Define features (X) and target variable (y)
+        # Define (X) and target variable (y)
         X = df_binary.drop(columns=['Diabetes_012'])  # Exclude the target column
         y = df_binary['Diabetes_012']  # Target column
-            
-        # Preprocess features (scale)
+        # Preprocess Scale
         X_scaled = scale_features(X)
-        
+        #print(f"this is X_scaled = {X_scaled}.")
         # Split the dataset into training and testing sets (80% train, 20% test)
         X_train, X_test, y_train, y_test = train_test_split(X_scaled, y, test_size=0.2, random_state=42, stratify=y)
-
-        """            
-        ###################### with ARGS
-        This section is intended to be added once we complete all args
-
-        # Optionally resample to balance classes
-        #args.model
-        if args.use_smote:
-            print("[INFO] Applying SMOTE and undersampling...")
-            X_scaled, y = combine_resampling(X_scaled, y)
+        #print(f"this is X_train = {X_train}.")
+        #print(X_train.shape, y_train.shape)
+        #print(X_test.shape, y_test.shape)
         
-        # Initialize and train model
-        print(f"[INFO] Training model: {args.model}")
-        trainer = ModelTrainer(model_type=args.model)
-        trainer.train(X_scaled, y)
-        
-        # Predict on training data (for testing — in practice, use test set)
-        y_pred = trainer.predict(X_scaled)a
-
-        # Evaluate
-        print("[INFO] Evaluating model...")
-        evaluate_model(y, y_pred)
-        ##################### with ARGS
-        """        
+        ##################### 
+        # The code below is designed with model_type = [RandomForest', 'XGBoost', 'LogisticRegression']
+        # For simplicity we will consider default LogisticRegression
         # args.model=modelt_type
-        ##################### The code below is designed with model_type = [RandomForest', 'XGBoost', 'LogisticRegression']
-        # For simplicity we will consider default LogisticRegression 
+        #####################
+        
         model_type = "LogisticRegression"
         if model_type == "RandomForest":
             print("This is work in progress for RandomForest...")
         elif model_type == "XGBoost":
             print("This is work in progress for  XGBoost...")
-            # Note: Consider
+            # Note: Consider to use 
             # X_scaled, y = combine_resampling(X_scaled, y)
         else:
+            #####################
             #This sections runs with Logistic regression
+            #####################
             print("Using LogisticRegression...")           
-            # Training model first version to train the model
-            # Initialize model trainer
+            # Training model to get the top 10 significatives 
+            # Initialize model trainer with args or without
+            # trainer = ModelTrainer(model_type=args.model)
             trainer = ModelTrainer(model_type='LogisticRegression', class_weight='balanced')
+            print(f"xxxxxxxxxxxxxxxxxxxxxxxxx>>>\n this is trainer = {trainer}.\n")
+            print(trainer.model)
+            #trainer = trainer.model
+            #print(trainer)
+            
             # Train the model
             trainer.train(X_train, y_train)
-            print("paris2")
-            print(trainer)
-            # COMMA 05/05/2025            
+            
             # Convert X_train to DataFrame to ensure column names are retained
-            #X_train_df = pd.DataFrame(X_train, columns=X.columns)  # Ensure X_train is a DataFrame
-
-            #trainer_importance = pd.Series(trainer.coef_[0], index=X_train_df.columns)  # Assign column names
-            #trainer_importance = pd.Series(trainer.coef_[0], index=X_train)  # Assign column names
+            #X_train_df = pd.DataFrame(X_train, columns=X.columns)  # Ensure X_train is a DataFrame    X
+            #X_train_df = pd.DataFrame(X_train)    X
+            
+            #print(X_train_df.columns)
+            #trainer_importance = pd.Series(trainer.model.coef_[0], index=X_train_df.columns)  # Assign column names X
+            #trainer_importance = pd.Series(trainer.coef_[0], index=X_train)  # Assign column names X
             trainer_importance = pd.Series(trainer.coef_[0], index=X_train.columns)  # Assign column names
 
             # Print Selection of the best 10 columns
@@ -238,10 +223,9 @@ def main():
             # Farben aus Viridis generieren and more config for plot or make them on graphics.py           
             #trainer_importance_sorted.head(10).plot(kind='bar', color='colors')
             topten = trainer_importance_plot(trainer_importance_sorted)
-            ##use try: just for now 
+            ##use try instead for later quick solution 
             if topten != "yes":
                 print("Trainer_importance_plot Not ploted")
-            # COMMA 06/05/2025
             ############
             ## Voting
             ###########
@@ -250,7 +234,6 @@ def main():
             X_train_balanced, y_train_balanced, vot_1 = implementing_voting(X_train, X_test, y_train, y_test)
             print("Completed = ")
             print(vot_1)
-            # COMMA 07/05/2025
             ############
             ## Tunning Hyperparameter
             ###########
@@ -259,7 +242,6 @@ def main():
             tun_1 = tunning_hyperparam(X_train_balanced, y_train_balanced)
             print("Completed = ")
             print(tun_1)
-            # COMMA 08/05/2025
             ############
             ## Voting with some additions
             ###########
