@@ -15,8 +15,8 @@ def scale_features(X):
     
     # Split the dataset into training and testing sets (80% train, 20% test)
     # X_train, X_test, y_train, y_test = train_test_split(X_scaled, y, test_size=0.2, random_state=42, stratify=y)
-
-    return X_scaled
+    
+    return X_scaled
 
 
 def overview(data):
@@ -30,7 +30,7 @@ def overview(data):
     if data.shape[0] == 0:
         raise ValueError("DataFrame has no rows.")
         
-    display(pd.DataFrame({
+    summary_overview = pd.DataFrame({
         'dtype': data.dtypes,
         'total': data.count(),
         'missing': data.isna().sum(),
@@ -38,10 +38,13 @@ def overview(data):
         'n_uniques': data.nunique(),
         'uniques%': data.nunique() / data.shape[0] * 100,
         'uniques': [data[col].unique() for col in data.columns]
-    }))
+    })
+    print(summary_overview)
+    return summary_overview
     
 
 def outliers_based_zscores(data):
+    df = data 
     # Calculate the Z-scores for the BMI column
     df['BMI_Z'] = (df['BMI'] - df['BMI'].mean()) / df['BMI'].std()
 
@@ -54,6 +57,7 @@ def outliers_based_zscores(data):
     return outliers
 
 def exclude(data):
+    df = data
     # Define the threshold for outliers (adjustable)
     outliers_threshold = 5
 
@@ -69,6 +73,7 @@ def exclude(data):
     return df_no
 
 def force_binary(data):
+    df = data
     # Step 1: Identify the individuals in Diabetes_012 == 0 who meet the criteria
     df.loc[(df['Diabetes_012'] == 0) & 
         (df[['Overweight', 'HighBP', 'HighChol']].eq(1).all(axis=1)), 'Diabetes_012'] = 1

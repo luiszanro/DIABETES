@@ -2,6 +2,7 @@ import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 import matplotlib.cm as cm
+from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
 
 def plotheatmap(data):
     df = data
@@ -37,3 +38,20 @@ def trainer_importance_plot(trainer_importance_sorted):
     plt
     topten = "Yes"
     return topten
+
+
+def graph_recall_precision(recall, precision, auprc):
+    plt.plot(recall, precision, marker='.')
+    plt.xlabel('Recall')
+    plt.ylabel('Precision')
+    plt.title(f'Precision-Recall Curve (AUC = {auprc:.2f})')  # Fixed unterminated f-string error
+    plt.show()
+    rp_img = "yes"
+    return rp_img
+
+def graph_cm(cm):
+    disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=["No Diabetes (0)", "Diabetes/Risk (1)"])
+    disp.plot(cmap="Blues", values_format="d")
+    plt.show()
+    cm_img = "yes"
+    return cm_img
