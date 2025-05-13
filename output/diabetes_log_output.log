@@ -1,0 +1,14 @@
+2025-05-09 09:29:59,250 - INFO - Entering DIABETES main().
+2025-05-09 09:29:59,250 - INFO - Dataset Path: data/raw/diabetes_dataset.csv
+2025-05-09 09:29:59,250 - INFO - Model Choice: LogisticRegression
+2025-05-09 09:29:59,250 - INFO - Execution Mode: 1
+2025-05-09 09:29:59,250 - INFO - Output Path: output/
+2025-05-09 09:29:59,250 - INFO - Working Directory: None
+2025-05-09 09:29:59,250 - INFO - Log Directory: None
+2025-05-09 09:31:48,945 - INFO - Entering DIABETES main().
+2025-05-09 09:31:48,945 - INFO - Dataset Path: .\data\raw\diabetes_dataset.csv
+2025-05-09 09:31:48,945 - INFO - Model Choice: LogisticRegression
+2025-05-09 09:31:48,951 - INFO - Execution Mode: 1
+2025-05-09 09:31:48,951 - INFO - Output Path: output/
+2025-05-09 09:31:48,951 - INFO - Working Directory: None
+2025-05-09 09:31:48,951 - INFO - Log Directory: None
