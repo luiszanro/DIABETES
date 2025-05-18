@@ -45,4 +45,4 @@ def combine_resampling(X, y, oversample_target={1: 5000, 2: 37000}, undersample_
     under = RandomUnderSampler(sampling_strategy=undersample_target)
     pipeline = Pipeline([('under', under), ('over', over)])
     X_resampled, y_resampled = pipeline.fit_resample(X, y)
-    return X_resampled, y_resampled
+    return X_resampled, y_resampled

@@ -3,22 +3,21 @@ import xgboost as xgb
 from sklearn.linear_model import LogisticRegression
 
 class ModelTrainer:
-    def _init_(self, model_type='RandomForest', class_weight='balanced'):
+    def __init__(self, model_type='RandomForest', class_weight='balanced'):
         """
         Initialize the model trainer with the desired model.
         Args:
             model_type (str): Type of model ('RandomForest', 'XGBoost', 'LogisticRegression').
             class_weight (str): Class weight setting ('balanced' or None).
         """
-        print("This is the model type = ")
-        print(model_type)
         if model_type == 'RandomForest':
             self.model = RandomForestClassifier(class_weight=class_weight, random_state=42)
         elif model_type == 'XGBoost':
             self.model = xgb.XGBClassifier(scale_pos_weight=10, random_state=42)
         elif model_type == 'LogisticRegression':
             #self.model = LogisticRegression(class_weight=class_weight, random_state=42)
-            self.model = LogisticRegression(max_iter=1000, class_weight=class_weight, random_state=42)
+            #self.model = LogisticRegression(max_iter=1000, class_weight=class_weight, random_state=42)
+            self.model = LogisticRegression(max_iter=1000, random_state=42)
         else:
             raise ValueError("Invalid model type. Choose from 'RandomForest', 'XGBoost', 'LogisticRegression'.")
     

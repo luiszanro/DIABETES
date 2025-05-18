@@ -5,6 +5,15 @@ build/
 dist/
 wheels/
 *.egg-info
+misc.py
+misc1.py
+misc2.py
+misc3.py
+mainargs.py
+notebooks/
+notebooks/*.ipynb
+#notebooks/diabetes_notebook_for_main_realtest_progress copy.ipynb
+catboost_info/
 
 # Virtual environments
 .venv

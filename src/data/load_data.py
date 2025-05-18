@@ -14,6 +14,6 @@ def load_data(filepath):
     # df.info()
     # df.describe()
     # print(df)
-    return df
+    return df
 
 # df = pd.read_csv(r"C:\Users\luisz\Desktop\GASTRIC-CANCER2\diabetes_dataset.csv")
